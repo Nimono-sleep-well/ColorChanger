@@ -15,6 +15,20 @@ tki.geometry("800x500")
 #画面タイトル
 tki.title("ColorChanger")
 
+var_R = tkinter.StringVar(tki)
+var_G = tkinter.StringVar(tki)
+var_B = tkinter.StringVar(tki)
+
+def reset_txt():
+    txt_R.delete(0,tkinter.END)
+    txt_G.delete(0,tkinter.END)
+    txt_B.delete(0,tkinter.END)
+
+def reset_var():
+    scale_R.set(0)
+    scale_G.set(0)
+    scale_B.set(0)
+
 def com(a, b, c):
     Com = [int(255 - a), int(255 - b), int(255 - c)]
     return Com
@@ -48,6 +62,10 @@ def reset_click():
     lbl_ana4["fg"] = "#000000"
     lbl_rev["fg"] = "#000000"
     lbl_In["fg"] = "#000000"
+    
+    scale_R.set(0)
+    scale_G.set(0)
+    scale_B.set(0)
         
 def btn_click():
     txt_ana1.delete(0,tkinter.END)
@@ -219,6 +237,21 @@ lbl.place(x=70, y=75)
 lbl = tkinter.Label(tki,text = "B", background="#cecfff")
 lbl.place(x=70, y=105)
 
+lbl_R = tkinter.Label(tki, textvariable=var_R)
+lbl_R.place(x=410, y=45)
+lbl_G = tkinter.Label(tki, textvariable=var_G)
+lbl_G.place(x=410, y=75)
+lbl_B = tkinter.Label(tki, textvariable=var_B)
+lbl_B.place(x=410, y=105)
+
+scale_R = tkinter.Scale(tki, orient=tkinter.HORIZONTAL, length=150, to=255, showvalue=False, variable=var_R)
+scale_R.place(x=250, y=45)
+scale_G = tkinter.Scale(tki, orient=tkinter.HORIZONTAL, length=150, to=255, showvalue=False, variable=var_G)
+scale_G.place(x=250, y=75)
+scale_B = tkinter.Scale(tki, orient=tkinter.HORIZONTAL, length=150, to=255, showvalue=False, variable=var_B)
+scale_B.place(x=250, y=105)
+#scale
+
 #境界
 lbl = tkinter.Label(tki,text = "-入力--------------", font=("Myrica M", "20", "bold"))
 lbl.place(x=70, y=10)
@@ -278,7 +311,7 @@ txt_In.place(x=400, y=320)
 ボタン
 """
 btn = tkinter.Button(tki,text="出力", command=btn_click, bg="#fffd8f")
-btn.place(x=250, y=70)
+btn.place(x=450, y=70)
 
 btn = tkinter.Button(tki,text="Reset", command=reset_click, bg="#7092be", font="10")
 btn.place(x=70, y=360)
