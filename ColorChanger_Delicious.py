@@ -19,21 +19,10 @@ var_R = tkinter.StringVar(tki)
 var_G = tkinter.StringVar(tki)
 var_B = tkinter.StringVar(tki)
 
-def reset_txt():
-    txt_R.delete(0,tkinter.END)
-    txt_G.delete(0,tkinter.END)
-    txt_B.delete(0,tkinter.END)
-
-def reset_var():
-    scale_R.set(0)
-    scale_G.set(0)
-    scale_B.set(0)
-
 def com(a, b, c):
     Com = [int(255 - a), int(255 - b), int(255 - c)]
     return Com
     
-
 def reset_click():
     txt_main.delete(0, tkinter.END)
     txt_R.delete(0,tkinter.END)
@@ -76,9 +65,6 @@ def btn_click():
     txt_rev.delete(0,tkinter.END)
     txt_In.delete(0,tkinter.END)
     txt_main.delete(0,tkinter.END)
-    #R_input = int(txt_R.get(), base=16)
-    #G_input = int(txt_G.get(), base=16)
-    #B_input = int(txt_B.get(), base=16)
     
     R_input = str(txt_R.get())
     G_input = str(txt_G.get())
@@ -96,20 +82,29 @@ def btn_click():
     """
     #以下RGB -> HSV変換
     #色相
-    if max(R_input, G_input, B_input) == R_input:
-        H = 60 * ((G_input - B_input) / (RGB_Max - RGB_Min))
-    elif  max(R_input, G_input, B_input) == G_input:
-        H = (60 * ((B_input - R_input) / (RGB_Max - RGB_Min))) + 120
+    if R_input == G_input and R_input == B_input:
+        H = 0
+        S = 0
+        V = R_input / 255 * 100
+        check = 1
+    
     else:
-        H = (60 * ((R_input - G_input) / (RGB_Max - RGB_Min))) + 240
-        
-    print(H)
-        
-    #彩度
-    S = (RGB_Max -RGB_Min) / RGB_Max * 100
+        if max(R_input, G_input, B_input) == R_input:
+            H = 60 * ((G_input - B_input) / (RGB_Max - RGB_Min))
+        elif  max(R_input, G_input, B_input) == G_input:
+            H = (60 * ((B_input - R_input) / (RGB_Max - RGB_Min))) + 120
+        else:
+            H = (60 * ((R_input - G_input) / (RGB_Max - RGB_Min))) + 240
+            
+        print(H)
+            
+        #彩度
+        S = (RGB_Max -RGB_Min) / RGB_Max * 100
 
-    #明度
-    V = RGB_Max / 255 * 100
+        #明度
+        V = RGB_Max / 255 * 100
+        
+        check = 0
 
     #以下類似色算出
     ana_HSV = [H - 40, H - 20, H + 20, H + 40]
@@ -125,36 +120,43 @@ def btn_click():
     hsv_min = hsv_max - ((S / 255) * hsv_max)
 
     ana_rgb = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
-    for i in range(4):
-        if ana_HSV[i] >= 0 and ana_HSV[i] < 60:
-            ana_rgb[i][0] = int(hsv_max)
-            ana_rgb[i][1] = int((ana_HSV[i] / 60) * (hsv_max - hsv_min) + hsv_min)
-            ana_rgb[i][2] = int(hsv_min)
-        
-        elif ana_HSV[i] >= 60 and ana_HSV[i] < 120:
-            ana_rgb[i][0] = int(((120 - ana_HSV[i]) / 60) * (hsv_max - hsv_min) + hsv_min)
-            ana_rgb[i][1] = int(hsv_max)
-            ana_rgb[i][2] = int(hsv_min)
-        
-        elif ana_HSV[i] >= 120 and ana_HSV[i] < 180:
-            ana_rgb[i][0] = int(hsv_min)
-            ana_rgb[i][1] = int(hsv_max)
-            ana_rgb[i][2] = int(((ana_HSV[i] - 120) / 60) * (hsv_max - hsv_min) + hsv_min)
-        
-        elif ana_HSV[i] >= 180 and ana_HSV[i] < 240:
-            ana_rgb[i][0] = int(hsv_min)
-            ana_rgb[i][1] = int(((240 - ana_HSV[i]) / 60) * (hsv_max - hsv_min) + hsv_min)
-            ana_rgb[i][2] = int(hsv_max)
+    if check == 0:
+        for i in range(4):
+            if ana_HSV[i] >= 0 and ana_HSV[i] < 60:
+                ana_rgb[i][0] = int(hsv_max)
+                ana_rgb[i][1] = int((ana_HSV[i] / 60) * (hsv_max - hsv_min) + hsv_min)
+                ana_rgb[i][2] = int(hsv_min)
             
-        elif ana_HSV[i] >= 240 and ana_HSV[i] < 300:
-            ana_rgb[i][0] = int(((ana_HSV[i] - 240) / 60) * (hsv_max - hsv_min) + hsv_min)
-            ana_rgb[i][1] = int(hsv_min)
-            ana_rgb[i][2] = int(hsv_max)
+            elif ana_HSV[i] >= 60 and ana_HSV[i] < 120:
+                ana_rgb[i][0] = int(((120 - ana_HSV[i]) / 60) * (hsv_max - hsv_min) + hsv_min)
+                ana_rgb[i][1] = int(hsv_max)
+                ana_rgb[i][2] = int(hsv_min)
             
-        elif ana_HSV[i] >= 300 and ana_HSV[i] < 360:
-            ana_rgb[i][0] = int(hsv_max)
-            ana_rgb[i][1] = int(hsv_min)
-            ana_rgb[i][2] = int(((360 - ana_HSV[i]) / 60) * (hsv_max - hsv_min) + hsv_min)
+            elif ana_HSV[i] >= 120 and ana_HSV[i] < 180:
+                ana_rgb[i][0] = int(hsv_min)
+                ana_rgb[i][1] = int(hsv_max)
+                ana_rgb[i][2] = int(((ana_HSV[i] - 120) / 60) * (hsv_max - hsv_min) + hsv_min)
+            
+            elif ana_HSV[i] >= 180 and ana_HSV[i] < 240:
+                ana_rgb[i][0] = int(hsv_min)
+                ana_rgb[i][1] = int(((240 - ana_HSV[i]) / 60) * (hsv_max - hsv_min) + hsv_min)
+                ana_rgb[i][2] = int(hsv_max)
+                
+            elif ana_HSV[i] >= 240 and ana_HSV[i] < 300:
+                ana_rgb[i][0] = int(((ana_HSV[i] - 240) / 60) * (hsv_max - hsv_min) + hsv_min)
+                ana_rgb[i][1] = int(hsv_min)
+                ana_rgb[i][2] = int(hsv_max)
+                
+            elif ana_HSV[i] >= 300 and ana_HSV[i] < 360:
+                ana_rgb[i][0] = int(hsv_max)
+                ana_rgb[i][1] = int(hsv_min)
+                ana_rgb[i][2] = int(((360 - ana_HSV[i]) / 60) * (hsv_max - hsv_min) + hsv_min)
+    else:
+        for j in range(3):
+            ana_rgb[0][j] = 63
+            ana_rgb[1][j] = 104
+            ana_rgb[2][j] = 150
+            ana_rgb[3][j] = 191
 
     """
     輝度
