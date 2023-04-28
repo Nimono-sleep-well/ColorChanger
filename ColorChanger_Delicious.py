@@ -110,7 +110,7 @@ def btn_click():
     for i in range(4):
         if ana_HSV[i] >= 0 and ana_HSV[i] < 60:
             ana_rgb[i][0] = int(hsv_max)
-            ana_rgb[i][1] = int((ana_HSV[i] / 60) * (hsv_max - hsv_min))
+            ana_rgb[i][1] = int((ana_HSV[i] / 60) * (hsv_max - hsv_min) + hsv_min)
             ana_rgb[i][2] = int(hsv_min)
         
         elif ana_HSV[i] >= 60 and ana_HSV[i] < 120:
