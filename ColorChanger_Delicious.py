@@ -32,9 +32,7 @@ def com(a, b, c):
     
 def reset_click():
     txt_main.delete(0, tk.END)
-    txt_R.delete(0,tk.END)
-    txt_G.delete(0,tk.END)
-    txt_B.delete(0,tk.END)
+    txt_RGB.delete(0,tk.END)
     txt_ana1.delete(0,tk.END)
     txt_ana2.delete(0,tk.END)
     txt_ana3.delete(0,tk.END)
@@ -59,9 +57,11 @@ def reset_click():
     lbl_rev["fg"] = "#000000"
     lbl_In["fg"] = "#000000"
     
+    """
     scale_R.set(0)
     scale_G.set(0)
     scale_B.set(0)
+    """
     
         
 def btn_click():
@@ -74,9 +74,12 @@ def btn_click():
     txt_In.delete(0,tk.END)
     txt_main.delete(0,tk.END)
     
-    R_input = str(txt_R.get())
-    G_input = str(txt_G.get())
-    B_input = str(txt_B.get())
+    for i in range(3):
+        RGB_input = [txt_RGB.get()[i:i+2] for i in range(0, len(txt_RGB.get()), 2)]
+    
+    R_input = RGB_input[0]
+    G_input = RGB_input[1]
+    B_input = RGB_input[2]
     
     R_input = int(R_input, base=16)
     G_input = int(G_input, base=16)
@@ -216,9 +219,7 @@ def btn_click():
     txt_rev.insert(0, str(num_rev))
     txt_In.insert(0, str(num_In))
     
-    txt_R.delete(0,tk.END)
-    txt_G.delete(0,tk.END)
-    txt_B.delete(0,tk.END)
+    txt_RGB.delete(0,tk.END)
     
     lbl_main["bg"] = "#"+str(num_main)
     lbl_ana1["bg"] = "#"+str(num_ana1)
@@ -247,13 +248,11 @@ tki.bind("<Return>", key_event)
 ラベル
 """
 #入力部
-lbl = tk.Label(tki,text = "R", background="#cecfff")
-lbl.place(x=70, y=45)
-lbl = tk.Label(tki,text = "G", background="#cecfff")
-lbl.place(x=70, y=75)
-lbl = tk.Label(tki,text = "B", background="#cecfff")
-lbl.place(x=70, y=105)
+lbl = tk.Label(tki,text = "RGB", background="#cecfff", font=("Myrica M", "15", "bold"))
+lbl.place(x=70, y=50)
 
+
+"""
 lbl_R = tk.Label(tki, textvariable=var_R)
 lbl_R.place(x=410, y=45)
 lbl_G = tk.Label(tki, textvariable=var_G)
@@ -267,6 +266,7 @@ scale_G = tk.Scale(tki, orient=tk.HORIZONTAL, length=150, to=255, showvalue=Fals
 scale_G.place(x=250, y=75)
 scale_B = tk.Scale(tki, orient=tk.HORIZONTAL, length=150, to=255, showvalue=False, variable=var_B)
 scale_B.place(x=250, y=105)
+"""
 #scale
 
 #境界
@@ -298,12 +298,8 @@ lbl_In.place(x=400, y=290)
 テキストボックス
 """
 #入力部
-txt_R = tk.Entry(width = 20)
-txt_R.place(x=100, y=45)
-txt_G = tk.Entry(width = 20)
-txt_G.place(x=100, y=75)
-txt_B = tk.Entry(width = 20)
-txt_B.place(x=100, y=105)
+txt_RGB = tk.Entry(width = 20)
+txt_RGB.place(x=70, y=80)
 
 #出力部
 txt_main = tk.Entry(width = 20)
@@ -328,13 +324,13 @@ txt_In.place(x=400, y=320)
 ボタン
 """
 btn = tk.Button(tki,text="出力", command=btn_click, bg="#fffd8f")
-btn.place(x=450, y=70)
+btn.place(x=210, y=75)
 
 btn = tk.Button(tki,text="Reset", command=reset_click, bg="#7092be", font="10")
 btn.place(x=70, y=360)
 
 btn_quit = tk.Button(tki, text="終了", command=tki.destroy, bg="#ffc5c5", font="10")
-btn_quit.place(x=170, y=360)
+btn_quit.place(x=200, y=360)
 
 
 tki.mainloop()
