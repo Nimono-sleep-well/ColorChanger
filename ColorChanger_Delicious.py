@@ -7,6 +7,7 @@ Created on Wed Apr 26 17:34:08 2023
 #import
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter import messagebox
 
 
 #tkクラス作成
@@ -19,6 +20,7 @@ tki.title("ColorChanger")
 var_R = tk.StringVar(tki)
 var_G = tk.StringVar(tki)
 var_B = tk.StringVar(tki)
+
 
 def key_event(e):
     btn_click()
@@ -60,6 +62,7 @@ def reset_click():
     scale_R.set(0)
     scale_G.set(0)
     scale_B.set(0)
+    
         
 def btn_click():
     txt_ana1.delete(0,tk.END)
@@ -329,5 +332,9 @@ btn.place(x=450, y=70)
 
 btn = tk.Button(tki,text="Reset", command=reset_click, bg="#7092be", font="10")
 btn.place(x=70, y=360)
+
+btn_quit = tk.Button(tki, text="終了", command=tki.destroy, bg="#ffc5c5", font="10")
+btn_quit.place(x=170, y=360)
+
 
 tki.mainloop()
