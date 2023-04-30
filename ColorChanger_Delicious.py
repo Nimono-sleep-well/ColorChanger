@@ -24,12 +24,14 @@ var_B = tk.StringVar(tki)
 
 def key_event(e):
     btn_click()
-    return 0
 
 def com(a, b, c):
     Com = [int(255 - a), int(255 - b), int(255 - c)]
     return Com
     
+def quit_command(e):
+    tki.destroy()
+
 def reset_click():
     txt_main.delete(0, tk.END)
     txt_RGB.delete(0,tk.END)
@@ -239,12 +241,6 @@ def btn_click():
     
     
 """
-Enter実行
-"""
-
-tki.bind("<Return>", key_event)
-    
-"""
 ラベル
 """
 #入力部
@@ -329,8 +325,15 @@ btn.place(x=210, y=75)
 btn = tk.Button(tki,text="Reset", command=reset_click, bg="#7092be", font="10")
 btn.place(x=70, y=360)
 
-btn_quit = tk.Button(tki, text="終了", command=tki.destroy, bg="#ffc5c5", font="10")
+btn_quit = tk.Button(tki, text="終了", command=quit_command, bg="#ffc5c5", font="10")
 btn_quit.place(x=200, y=360)
 
+"""
+キーボード操作盤
+"""
+
+tki.bind("<Return>", key_event)
+    
+tki.bind("<KeyPress-q>", quit_command)
 
 tki.mainloop()
