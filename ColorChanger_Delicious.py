@@ -322,10 +322,10 @@ txt_In.place(x=400, y=320)
 btn = tk.Button(tki,text="出力", command=btn_click, bg="#fffd8f")
 btn.place(x=210, y=75)
 
-btn = tk.Button(tki,text="Reset", command=reset_click, bg="#7092be", font="10")
+btn = tk.Button(tki,text="Reset", command=reset_click, bg="#7092be", font=("Myrica M", "15", "bold"))
 btn.place(x=70, y=360)
 
-btn_quit = tk.Button(tki, text="終了", command=quit_command, bg="#ffc5c5", font="10")
+btn_quit = tk.Button(tki, text="終了", command=tki.destroy, bg="#ffc5c5", font=("Myrica M", "15", "bold"))
 btn_quit.place(x=200, y=360)
 
 """
